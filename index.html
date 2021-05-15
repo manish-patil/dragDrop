@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Drag Drop</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+
+<body>
+    <div class="main">
+        <div>
+            <div class="box white" ondrop="drop(event)" ondragover="dragOver(event)">
+                <img id="img" src="./images/business.png" draggable="true" ondragstart="drag(event)" />
+            </div>
+            <div class="box black" ondrop="drop(event)" ondragover="dragOver(event)"></div>
+        </div>
+        <div>
+            <div class="box black" ondrop="drop(event)" ondragover="dragOver(event)"></div>
+            <div class="box white" ondrop="drop(event)" ondragover="dragOver(event)"></div>
+        </div>
+</body>
+<script>
+    function drag(e) {
+        e.dataTransfer.setData('source', e.target.id);
+    }
+
+    function drop(e) {
+        e.preventDefault();
+
+        const img = e.dataTransfer.getData("source");
+        e.target.appendChild(document.getElementById(img));
+    }
+
+    function dragOver(e) {
+        e.preventDefault();
+    }
+</script>
+
+</html>
