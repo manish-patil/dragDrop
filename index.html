@@ -11,31 +11,46 @@
 
 <body>
     <div class="main">
-        <div>
-            <div class="box white" ondrop="drop(event)" ondragover="dragOver(event)">
+        <div class="row">
+            <div id="0-0" class="box white" ondrop="drop(event)" ondragover="dragOver(event)">
                 <img id="img" src="./images/business.png" draggable="true" ondragstart="drag(event)" />
             </div>
-            <div class="box black" ondrop="drop(event)" ondragover="dragOver(event)"></div>
+            <div id="0-1" class="box black" ondrop="drop(event)" ondragover="dragOver(event)"></div>
         </div>
-        <div>
-            <div class="box black" ondrop="drop(event)" ondragover="dragOver(event)"></div>
-            <div class="box white" ondrop="drop(event)" ondragover="dragOver(event)"></div>
+        <div class="row">
+            <div id="1-0" class="box black" ondrop="drop(event)" ondragover="dragOver(event)"></div>
+            <div id="1-1" class="box white" ondrop="drop(event)" ondragover="dragOver(event)"></div>
         </div>
 </body>
 <script>
     function drag(e) {
         e.dataTransfer.setData('source', e.target.id);
+        e.dataTransfer.setData('parent', e.target.parentElement.id);
     }
 
     function drop(e) {
         e.preventDefault();
 
         const img = e.dataTransfer.getData("source");
-        e.target.appendChild(document.getElementById(img));
+        const parent = e.dataTransfer.getData("parent");
+
+        const sourceCell = parseId(parent);
+        const targetCell = parseId(e.target.id);
+
+        if (sourceCell[0] === targetCell[0] || sourceCell[1] === targetCell[1]) {
+            e.target.appendChild(document.getElementById(img));
+        }
     }
 
     function dragOver(e) {
         e.preventDefault();
+    }
+
+    function parseId(id) {
+        const row = id.slice(0, 1);
+        const col = id.slice(2);
+
+        return [row, col];
     }
 </script>
 
